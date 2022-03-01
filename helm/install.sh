@@ -50,3 +50,10 @@ kubectl config set-context --current --namespace airflow
 
 # Log in to the web application
 minikube service --url airflow-webserver -n airflow
+
+# Use `kubectl exec -it <scheduler_pod_name> -- /bin/bash` to
+# open a terminal to the pod.
+# Navigate to '/opt/airflow/dags'.
+# Copy the content from the dag.py file.
+# In your terminal in the scheduler pod, type `echo '<DAG CONTENT>' > dag.py`
+# replacing the <DAG CONTENT> token with the dag definition from your clipboard.
