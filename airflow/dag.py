@@ -13,19 +13,19 @@ default_args = {
 }
 
 with DAG(
-    dag_id='DB_DAG',
+    dag_id="DB_DAG",
     description="""
         DAG created for subsurface conference. Contains several Bash tasks
         that result in individual TaskInstances on the Kubernetes platform.
         Purpose is to show the number of connections made with the database.
     """,
     schedule_interval=None,
-    start_date=datetime(2022, 1, 1, tzinfo=Timezone('Europe/Amsterdam')),
+    start_date=datetime(2022, 1, 1, tzinfo=Timezone("Europe/Amsterdam")),
     dagrun_timeout=timedelta(minutes=30),
     catchup=False,
     is_paused_upon_creation=False,
     default_args=default_args,
-    tags=['subsurface', 'db-check']
+    tags=["subsurface", "db-check"]
 ) as d:
     t1 = BashOperator(
         task_id="bash_1",
