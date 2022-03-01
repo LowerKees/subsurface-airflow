@@ -29,6 +29,9 @@ read dbPass
 echo "Enter database host"
 read dbHost
 
+echo "Enter fernet key"
+read fernetKey
+
 # Start by adding the helm repo for the latest stable airflow chart
 helm repo add apache-airflow https://airflow.apache.org
 helm upgrade --install airflow apache-airflow/airflow \
@@ -39,7 +42,8 @@ helm upgrade --install airflow apache-airflow/airflow \
     --set data.metadataConnection.host=$dbHost \
     --set data.metadataConnection.user=$dbUser\
     --set postgresql.postgresqlPassword=$dbPass \
-    --set postgresql.postgresqlUsername=$dbUser
+    --set postgresql.postgresqlUsername=$dbUser \
+    --set fernetKey=$fernetKey
 
 # Import the namespace into the current context
 kubectl config set-context --current --namespace airflow
