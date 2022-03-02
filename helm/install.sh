@@ -19,6 +19,8 @@ fi
 
 # Create namespace and local storage making it possible to mount
 kubectl create namespace airflow 2>/dev/null # Redirecting STDERR if namespace already exists
+kubectl apply -f helm/airflow-dags-pvc.yml
+kubectl apply -f helm/airflow-dags-pv.yml
 
 echo "Enter database user"
 read dbUser
@@ -51,9 +53,9 @@ kubectl config set-context --current --namespace airflow
 # Log in to the web application
 minikube service --url airflow-webserver -n airflow
 
-# Use `kubectl exec -it <scheduler_pod_name> -- /bin/bash` to
-# open a terminal to the pod.
-# Navigate to '/opt/airflow/dags'.
-# Copy the content from the dag.py file.
-# In your terminal in the scheduler pod, type `echo '<DAG CONTENT>' > dag.py`
-# replacing the <DAG CONTENT> token with the dag definition from your clipboard.
+# Use `minikube ssh` to
+# open a terminal to the cluster node.
+# Navigate to '/mnt/dags'.
+# Copy the content from the dag.py file and paste it in /mnt/dags/dag.py
+# This dir on the node should be mounted via the pv to the /opt/airflow/dags
+# directory inside your pods.
